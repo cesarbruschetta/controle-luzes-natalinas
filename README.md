@@ -22,12 +22,16 @@ poetry install
 
 ```bash
 poetry export --only main --format requirements.txt --output requirements.txt
-python -m venv .venv
-.venv/bin/python -m pip install --no-deps -r requirements.txt
-.venv/bin/python -m pip install --no-deps .
+python3 -m venv venv
+venv/bin/python -m pip install --no-deps -r requirements.txt
+venv/bin/python -m pip install --no-deps .
+venv/bin/python -m pip show luzes-natalino
+venv/bin/natal-agendar --help
 ```
 
-O export inclui as dependências diretas e transitivas travadas; `--no-deps` evita que o pip tente resolver novamente essas dependências. O último comando instala o próprio projeto e registra `natal-agendar` e `natal-tomada` nesse ambiente. Gere novamente o `requirements.txt` sempre que alterar as dependências no `pyproject.toml` e atualizar o lockfile com Poetry. O plugin de exportação necessário está declarado em `tool.poetry.requires-plugins` e é instalado pelo Poetry ao executar `poetry install`.
+O export inclui as dependências diretas e transitivas travadas; `--no-deps` evita que o pip tente resolver novamente essas dependências. **Instalar apenas `requirements.txt` não instala o projeto**: o `pip install --no-deps .`, executado a partir da raiz que contém `pyproject.toml`, instala `src/luzes_natalino` e cria os comandos `natal-agendar` e `natal-tomada` dentro de `venv/bin`. Use sempre o mesmo ambiente virtual na instalação e na execução. Gere novamente o `requirements.txt` sempre que alterar as dependências no `pyproject.toml` e atualizar o lockfile com Poetry. O plugin de exportação necessário está declarado em `tool.poetry.requires-plugins` e é instalado pelo Poetry ao executar `poetry install`.
+
+Se já criou `venv` e instalou as dependências, conclua a instalação do pacote a partir da raiz do repositório com `venv/bin/python -m pip install --no-deps .`.
 
 O arquivo `.env` usa atribuições simples (`NATAL_...=...`). Para carregá-lo no Bash e exportar as variáveis para o processo do Poetry, execute:
 
