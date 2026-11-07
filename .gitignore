@@ -208,6 +208,10 @@ tempCodeRunnerFile.py
 # Ruff stuff:
 .ruff_cache/
 
+# Local environment files
+.env
+*.env
+
 # PyPI configuration file
 .pypirc
 
@@ -216,5 +220,9 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# Local configuration and credentials
+*.env
+
 # Streamlit
 .streamlit/secrets.toml
+.tool-versions
