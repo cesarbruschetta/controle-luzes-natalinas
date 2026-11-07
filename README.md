@@ -16,6 +16,19 @@ asdf install
 poetry install
 ```
 
+### Instalação sem Poetry no ambiente de produção
+
+`requirements.txt` é exportado do `poetry.lock` e contém as dependências principais, sem as ferramentas de teste:
+
+```bash
+poetry export --only main --format requirements.txt --output requirements.txt
+python -m venv .venv
+.venv/bin/python -m pip install --no-deps -r requirements.txt
+.venv/bin/python -m pip install --no-deps .
+```
+
+O export inclui as dependências diretas e transitivas travadas; `--no-deps` evita que o pip tente resolver novamente essas dependências. O último comando instala o próprio projeto e registra `natal-agendar` e `natal-tomada` nesse ambiente. Gere novamente o `requirements.txt` sempre que alterar as dependências no `pyproject.toml` e atualizar o lockfile com Poetry. O plugin de exportação necessário está declarado em `tool.poetry.requires-plugins` e é instalado pelo Poetry ao executar `poetry install`.
+
 O arquivo `.env` usa atribuições simples (`NATAL_...=...`). Para carregá-lo no Bash e exportar as variáveis para o processo do Poetry, execute:
 
 ```bash

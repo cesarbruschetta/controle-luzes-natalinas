@@ -3,7 +3,7 @@ name = "luzes-natalino"
 version = "0.1.0"
 description = "Agendamento das luzes de Natal com dados solares e Tuya Cloud."
 readme = "README.md"
-requires-python = ">=3.13,<3.14"
+requires-python = ">=3.13"
 dependencies = [
     "pydantic-settings>=2.10,<3.0",
     "requests>=2.32,<3.0",
@@ -14,8 +14,15 @@ dependencies = [
 natal-agendar = "luzes_natalino.cli_schedule:main"
 natal-tomada = "luzes_natalino.cli_control:main"
 
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.poetry]
 packages = [{ include = "luzes_natalino", from = "src" }]
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4"
